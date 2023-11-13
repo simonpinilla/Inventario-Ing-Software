@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+ }
+ 
+ html {
+    font-size: 62.5%;
+ }
+ 
+ body {
+    background-color:#FEF8E0;
+    /* backdrop-filter: blur(5px); */
+    font-family: 'Karla', sans-serif;
+ }
+ 
+ 
+ /* ==================== */
+ /* Mobile first */
+ .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-width: 320px;
+    /* height: 100vh; */
+    margin-top: 10rem;
+ }
+ 
+ .card__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+ }
+ 
+ .card__logo {
+    width: 25rem;
+ }
+ 
+ .card__logo-img {
+    width: 100%;
+ }
+ 
+ .card__title {
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: rgb(0, 0, 0);
+ }
+ 
+ .card__title span {
+    font-weight: bold;
+ }
+ 
+ /* ================== */
+ /* card body */
+ .card__body {
+    width: 100%; /* 90%?*/
+    max-width: 400px;
+    margin-top: 1rem;
+    
+ }
+ 
+ .card__form {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+ }
+ 
+ .card__input {
+    padding: 1.2rem;
+    margin-bottom: 1px;
+    border: none;
+    color: rgb(7, 6, 6);
+    background-color: rgba(0, 0, 0, 0.1);
+    font-family: 'Karla', sans-serif;
+    font-weight: 400;
+ }
+ 
+ .card__input::placeholder {
+    color: rgba(0, 0, 0, 0.664);
+ }
+ 
+ .card__input:focus {
+    border-bottom: 2px dotted rgb(0, 0, 0);
+ }
+ 
+ .card--btn-login {
+    margin-top: 3px;
+ }
+ 
+ .card--btn-login:hover {
+    cursor: pointer;
+ }
+ 
+ .card--btn-login:active {
+    background-color:rgb(52, 68, 52);
+    
+ }
+ 
+ 
+ .card__register {
+    display: flex;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: rgb(7, 6, 6);
+ }
+ 
+ .card__register-link {
+    margin-left: 10px;
+    color: rgb(0, 0, 0);
+ }  
