@@ -19,7 +19,7 @@ def loginView(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Inicio de sesión exitoso')
-                return redirect('inventario')  # Redirige a la página principal después del inicio de sesión
+                return redirect('index')  # Redirige a la página principal después del inicio de sesión
             else:
                 messages.error(request, 'Credenciales incorrectas. Por favor, inténtelo de nuevo.')
         else:
@@ -35,7 +35,7 @@ def logoutView(request):
 
 @login_required(login_url='login')
 def inventario(request):
-    return render(request, 'inventario.html')
+    return render(request, 'index.html')
 
 
 

@@ -30,8 +30,8 @@
   --bs-gray-400: #ced4da;
   --bs-gray-500: #adb5bd;
   --bs-gray-600: #6c757d;
-  --bs-gray-700: #007efc;
-  --bs-gray-800: #0080ff;
+  --bs-gray-700: #373e46;
+  --bs-gray-800: #3d3737;
   --bs-gray-900: #2d3946;
   --bs-primary: #0d6efd;
   --bs-secondary: #6c757d;
@@ -284,7 +284,7 @@ kbd {
   padding: 0.2rem 0.4rem;
   font-size: 0.875em;
   color: #fff;
-  background-color: #0080ff;
+  background-color: #000000;
   border-radius: 0.2rem;
 }
 kbd kbd {
@@ -3959,7 +3959,7 @@ textarea.form-control-lg {
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
-  color: #0d6efd;
+  color: #f0f0f0;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
@@ -3969,7 +3969,7 @@ textarea.form-control-lg {
   }
 }
 .nav-link:hover, .nav-link:focus {
-  color: #0a58ca;
+  color: #ffffff;
 }
 .nav-link.disabled {
   color: #6c757d;
@@ -3978,7 +3978,7 @@ textarea.form-control-lg {
 }
 
 .nav-tabs {
-  border-bottom: 1px solid #0080ff;
+  border-bottom: 1px solid #ffffff;
 }
 .nav-tabs .nav-link {
   margin-bottom: -1px;
@@ -4016,7 +4016,7 @@ textarea.form-control-lg {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #0d6efd;
+  background-color: #ffffff;
 }
 
 .nav-fill > .nav-link,

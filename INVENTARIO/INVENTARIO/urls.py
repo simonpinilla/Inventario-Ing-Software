@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from myinventario.views import *
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', loginView, name='login'),
-    path('inventario/',inventario, name="inventario"),
+    path('index/',inventario, name="index"),
     path('logout/', logoutView, name='logout'),
-
+    
 ]
