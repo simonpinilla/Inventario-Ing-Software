@@ -19,8 +19,8 @@ from myinventario.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', login),
-    path('inventario/',inventario, name="inventario")
-
+    path('', loginView, name='login'),
+    path('inventario/',inventario, name="inventario"),
+    path('logout/', logoutView, name='logout'),
 
 ]
