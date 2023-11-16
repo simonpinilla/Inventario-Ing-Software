@@ -11,19 +11,17 @@
    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@200;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-   
-</body>
-</html>
    <main>
       <div class="card">
          <div class="card__header">
             <div class="card__logo">
                <img class="card__logo-img" src="{% static 'images/logo.jpg' %}" alt="">
             </div>
-            <h1 class="card__title">Bienvendo a <span>Inventario OPORTO</span> </h1>
+            <h1 class="card__title">Bienvenido a <span>Inventario OPORTO</span> </h1>
          </div>
          <div class="card__body">
             <form class="card__form" action="{% url 'login' %}" method="post">
+               {{ error }}
                {% csrf_token %}
                <input class="card__input" type="text" placeholder="Usuario" name="username">
                <input class="card__input" type="password" placeholder="Contraseña" name="password">

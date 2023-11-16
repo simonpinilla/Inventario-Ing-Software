@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from django.contrib import messages
 from .forms import CustomLoginForm
 from django.contrib.auth import login, logout
 # Create your views here.
@@ -21,9 +20,9 @@ def loginView(request):
                 messages.success(request, 'Inicio de sesión exitoso')
                 return redirect('index')  # Redirige a la página principal después del inicio de sesión
             else:
-                messages.error(request, 'Credenciales incorrectas. Por favor, inténtelo de nuevo.')
+                return render(request, 'login.html', {'form': form, 'error': 'Credenciales incorrectas. Por favor, inténtelo de nuevo.'})
         else:
-            messages.error(request, 'Por favor, corrija los errores en el formulario.')
+            return render(request, 'login.html', {'form': form, 'error': 'Credenciales incorrectas. Por favor, inténtelo de nuevo.'})
     else:
         form = CustomLoginForm()
     return render(request, 'login.html', {'form': form})
