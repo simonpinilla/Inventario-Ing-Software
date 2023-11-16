@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import CustomLoginForm
@@ -32,7 +33,7 @@ def logoutView(request):
     logout(request)
     return redirect('login')
 
-
+@login_required(login_url='login')
 def inventario(request):
     return render(request, 'inventario.html')
 
