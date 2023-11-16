@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .forms import CustomLoginForm
 from django.contrib.auth import login, logout
+from django.contrib import messages
+
 # Create your views here.
 
 def loginView(request):
