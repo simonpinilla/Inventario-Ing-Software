@@ -39,6 +39,13 @@ def inventario(request):
     return render(request, 'index.html')
 
 
+@login_required(login_url='login')
+def proveedores(request):
+    return render(request, 'proveedores.html')
+
+    
+
+
 
 # funcion para crear el usuario   user = admin,  password = 344321
 def registrar(request):

@@ -14,6 +14,16 @@
     font-family: 'Karla', sans-serif;
  }
  
+
+ .tabla {
+   width: 100%;
+   border-collapse: collapse;
+ }
+ th, td {
+   border: 1px solid #ff0000;
+   padding: 8px;
+   text-align: left;
+ }
  
  /* ==================== */
  /* Mobile first */
@@ -27,7 +37,7 @@
     margin-top: 10rem;
  }
  h2 {
-   color: red; /* Cambiará el color a azul */
+   color: red; /* Cambiará el color a red */
  }
 
 
