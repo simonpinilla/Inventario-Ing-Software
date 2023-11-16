@@ -26,7 +26,11 @@
     /* height: 100vh; */
     margin-top: 10rem;
  }
- 
+ h2 {
+   color: red; /* Cambiará el color a azul */
+ }
+
+
  .card__header {
     display: flex;
     flex-direction: column;

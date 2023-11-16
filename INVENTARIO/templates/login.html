@@ -21,11 +21,11 @@
          </div>
          <div class="card__body">
             <form class="card__form" action="{% url 'login' %}" method="post">
-               {{ error }}
                {% csrf_token %}
                <input class="card__input" type="text" placeholder="Usuario" name="username">
                <input class="card__input" type="password" placeholder="Contraseña" name="password">
                <input class="card__input card--btn-login" type="submit" value="Iniciar Sesión">
+               <h2>{{ error }}</h2>
            </form>
          </div>
       </div>
