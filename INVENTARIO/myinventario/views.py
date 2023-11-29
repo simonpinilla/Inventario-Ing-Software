@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 
@@ -19,25 +19,39 @@ def inventario(request):
 
 @login_required(login_url='login')
 def proveedores(request):
-    return render(request, 'proveedores.html')
+    return render(request, 'prove.html')
+
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
+def productos(request):
+    return render(request, 'productos.html')
+
+def descuentoProductos(request):
+    return render(request, 'descuentoProductos.html')
+
+def agregarCategoria(request):
+    return render(request, 'agregarCategoria.html')
+
+
+def agregar_categoria(request):
+    if request.method == 'POST':
+        nombre_categoria = request.POST.get('nombre_categoria')
+        descripcion_categoria = request.POST.get('descripcion_categoria')
+
+        print(f'Nombre de la categoría: {nombre_categoria}')
+        print(f'Descripción de la categoría: {descripcion_categoria}')
+        print("aqui")
+
+        # Crea y guarda la nueva categoría
+        nueva_categoria = Categoria(nombre=nombre_categoria, descripcion=descripcion_categoria)
+        nueva_categoria.save()
+
+        return redirect('dashboard')  # Redirige a la vista deseada después de agregar la categoría
+
+    return render(request, 'agregarCategoria.html')  # Renderiza la plantilla del formulario
 
     
-
-
-
-# funcion para crear el usuario   user = admin,  password = 344321
-# def registro(request):
-#     if request.method == 'POST':
-#         form = RegistroForm(request.POST)
-#         if form.is_valid():
-#             usuario_nuevo = form.save(commit=False)
-#             contraseña = form.cleaned_data['contraseña']
-#             usuario_nuevo.set_password(contraseña)  # Encripta la contraseña
-#             usuario_nuevo.save()
-#             return redirect('login')  # Redirecciona a la página de registro exitoso o a donde sea necesario
-#     else:
-#         form = RegistroForm()
-#     return render(request, 'registro2.html', {'form': form})
 
 def registro(request):
     if request.method == 'POST':
@@ -65,7 +79,7 @@ def iniciar_sesion(request):
             print("aqui")
             login(request, user)
             # Redireccionar a una página después del inicio de sesión exitoso
-            return redirect('index')  # Reemplaza 'nombre_de_la_vista' con el nombre de tu vista
+            return redirect('dashboard')  # Reemplaza 'nombre_de_la_vista' con el nombre de tu vista
         else:
             # Mostrar un mensaje de error en la página de inicio de sesión
             messages.error(request, 'Credenciales inválidas. Inténtalo de nuevo.')

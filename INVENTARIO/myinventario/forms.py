@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import MiUsuario
+from .models import *
 from django.contrib.auth.forms import UserCreationForm
 
 # class CustomLoginForm(AuthenticationForm):

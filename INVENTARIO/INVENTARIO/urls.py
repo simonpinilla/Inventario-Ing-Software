@@ -24,6 +24,16 @@ urlpatterns = [
     path('index/',inventario, name="index"),
     path('logout/', logoutView, name='logout'),
     path('proveedores/', proveedores, name="proveedores"),
-    path('registro/',registro,name="registro")
+    path('registro/',registro,name="registro"),
+    path('dashboard/',dashboard,name="dashboard"),
+    path('productos/',productos,name="productos"),
+    path('descuentoProductos/',descuentoProductos,name="decuentoProductos"),
+    path('agregarCategoria/',agregarCategoria,name="agregarCategoria"),
+    path('agregar_categoria/', agregar_categoria, name='agregar_categoria')
+
+
+
+
+
     
 ]
