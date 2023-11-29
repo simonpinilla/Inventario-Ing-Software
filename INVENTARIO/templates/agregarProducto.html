@@ -1,0 +1,34 @@
+{% extends 'layout/app2.html' %}
+{% load static %}
+
+{% block body %}
+<form method="post" action="{% url 'agregar_producto' %}">
+    {% csrf_token %}
+    <h1>Agregar Producto</h1>
+    <div class="form-group" >
+        <label for="id_nombre_categoria">Nombre:</label>
+        <input type="text" class="form-control" id="id_nombre_categoria" name="nombre_producto" placeholder="Nombre del producto...">
+    </div>
+    <div class="form-group" >
+        <label for="id_nombre_categoria">Descripción:</label>
+        <input type="text" class="form-control" id="id_descripcion" name="descripcion_producto" placeholder="Descripción..">
+    </div>
+    <div class="form-group">
+        <label for="id_descripcion_categoria">Cantidad</label>
+        <input type="text" class="form-control" id="id_cantidad" name="cantidad_producto" placeholder="Cantidad del producto...">
+    </div>
+    <div class="form-group" >
+        <label for="id_nombre_categoria">Precio</label>
+        <input type="text" class="form-control" id="id_precio" name="precio_producto" placeholder="Precio del Producto...">
+    </div>
+    <div class="form-group">
+        <label for="id_categoria_producto">Categoría:</label>
+        <select class="form-control" id="id_categoria_producto" name="categoria_producto">
+            {% for categoria in categorias %}
+                <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar Producto</button>
+</form>
+{% endblock %}

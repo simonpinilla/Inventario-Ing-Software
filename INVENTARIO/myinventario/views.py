@@ -33,6 +33,10 @@ def descuentoProductos(request):
 def agregarCategoria(request):
     return render(request, 'agregarCategoria.html')
 
+def agregarProducto(request):
+    categorias = Categoria.objects.all()
+    return render(request, 'agregarProducto.html', {'categorias': categorias})
+
 
 def agregar_categoria(request):
     if request.method == 'POST':
@@ -50,6 +54,33 @@ def agregar_categoria(request):
         return redirect('dashboard')  # Redirige a la vista deseada después de agregar la categoría
 
     return render(request, 'agregarCategoria.html')  # Renderiza la plantilla del formulario
+
+
+def agregar_producto(request):
+    if request.method == 'POST':
+        nombre_producto = request.POST.get('nombre_producto')
+        descripcion_producto = request.POST.get('descripcion_producto')
+        cantidad_producto = request.POST.get('cantidad_producto')
+        precio_producto = request.POST.get('precio_producto')
+        categoria_id = request.POST.get('categoria_producto')
+
+        # Obtener la categoría seleccionada
+        categoria_seleccionada = Categoria.objects.get(id=categoria_id)
+
+        # Crear y guardar el nuevo producto con la categoría seleccionada
+        nuevo_producto = Producto(
+            nombre=nombre_producto,
+            descripcion=descripcion_producto,
+            cantidad=cantidad_producto,
+            precio=precio_producto,
+            categoria_id=categoria_seleccionada
+        )
+        nuevo_producto.save()
+
+        return redirect('productos')  # Redirige a la vista deseada después de agregar el producto
+
+    categorias = Categoria.objects.all()  # Obtener todas las categorías disponibles
+    return render(request, 'agregarProducto', {'categorias': categorias})
 
     
 
