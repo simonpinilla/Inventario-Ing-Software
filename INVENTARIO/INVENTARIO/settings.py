@@ -38,14 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
-    'crispy_bootstrap5',
-    'myinventario',
+    'myinventario'
 ]
-
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-
-CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,6 +52,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'INVENTARIO.urls'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    # Otros backends personalizados, si los tienes, pueden estar listados aquí
+]
 
 TEMPLATES = [
     {
@@ -113,6 +112,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
+
+AUTH_USER_MODEL = 'myinventario.MiUsuario'
 
 LANGUAGE_CODE = 'en-us'
 

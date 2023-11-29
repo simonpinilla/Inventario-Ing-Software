@@ -1,35 +1,13 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.http import HttpResponse
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from .forms import CustomLoginForm
+
 from django.contrib.auth import login, logout
 from django.contrib import messages
+from .forms import *
 
-# Create your views here.
-
-def loginView(request):
-    if request.method == 'POST':
-        form = CustomLoginForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.success(request, 'Inicio de sesión exitoso')
-                return redirect('index')  # Redirige a la página principal después del inicio de sesión
-            else:
-                return render(request, 'login.html', {'form': form, 'error': 'Credenciales incorrectas. Por favor, inténtelo de nuevo.'})
-        else:
-            return render(request, 'login.html', {'form': form, 'error': 'Credenciales incorrectas. Por favor, inténtelo de nuevo.'})
-    else:
-        form = CustomLoginForm()
-    return render(request, 'login.html', {'form': form})
-
-
+# Create your views here
 def logoutView(request):
     logout(request)
     return redirect('login')
@@ -48,22 +26,52 @@ def proveedores(request):
 
 
 # funcion para crear el usuario   user = admin,  password = 344321
-def registrar(request):
-    if request.method == "GET":
-        return render(request, "registrar.html", {
-            "form": UserCreationForm
-    })
+# def registro(request):
+#     if request.method == 'POST':
+#         form = RegistroForm(request.POST)
+#         if form.is_valid():
+#             usuario_nuevo = form.save(commit=False)
+#             contraseña = form.cleaned_data['contraseña']
+#             usuario_nuevo.set_password(contraseña)  # Encripta la contraseña
+#             usuario_nuevo.save()
+#             return redirect('login')  # Redirecciona a la página de registro exitoso o a donde sea necesario
+#     else:
+#         form = RegistroForm()
+#     return render(request, 'registro2.html', {'form': form})
+
+def registro(request):
+    if request.method == 'POST':
+        form = MiUsuarioCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirige a la página de inicio de sesión o donde quieras después del registro exitoso
+            return redirect('login')  # Reemplaza 'login' con el nombre de la URL de tu página de inicio de sesión
     else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                user = User.objects.create_superuser(username=request.POST['username'], password=request.POST['password1'])
-                user.save()
-                return HttpResponse('Usuario creado correctamente')
-            except:
-                return HttpResponse('usuario ya existe')
-        return HttpResponse('Password no coinsiden')
-
-
+        form = MiUsuarioCreationForm()
     
+    return render(request, 'registro.html', {'form': form})
+
+ 
+def iniciar_sesion(request):
+    if request.method == 'POST':
+        usuario = request.POST.get('usuario')
+        password = request.POST.get('password')
+    
+        user = authenticate(request, usuario=usuario, password=password)
+        print(user)
+        
+
+        if user is not None:
+            print("aqui")
+            login(request, user)
+            # Redireccionar a una página después del inicio de sesión exitoso
+            return redirect('index')  # Reemplaza 'nombre_de_la_vista' con el nombre de tu vista
+        else:
+            # Mostrar un mensaje de error en la página de inicio de sesión
+            messages.error(request, 'Credenciales inválidas. Inténtalo de nuevo.')
+            
+
+    # Si el método de la solicitud no es POST o si hay errores, renderizar la plantilla de inicio de sesión.
+    return render(request, 'login.html')   
 
 
