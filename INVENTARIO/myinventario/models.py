@@ -64,7 +64,7 @@ class Proveedor(models.Model):
     ciudad = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"Proveedor: {self.nombre} - Teléfono: {self.telefono} - Dirección: {self.direccion} - Ciudad: {self.ciudad}"
+        return f"{self.nombre}"
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
@@ -72,7 +72,7 @@ class Categoria(models.Model):
     
 
     def __str__(self):
-        return f"Proveedor: {self.nombre} - Teléfono: {self.descripcion}"
+        return f"{self.nombre}"
 
 
 
@@ -87,7 +87,7 @@ class Producto(models.Model):
     
 
     def __str__(self):
-        return f"Proveedor: {self.nombre} - Teléfono: {self.descripcion}- Cantidad: {self.cantidad} - Precio: {self.precio}"
+        return f"Proveedor: {self.nombre}"
 
 
 class DetalleOrden(models.Model):

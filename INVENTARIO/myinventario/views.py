@@ -27,7 +27,8 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 def productos(request):
-    return render(request, 'productos.html')
+    productos= Producto.objects.all()
+    return render(request, 'productos.html',{"productos" : productos})
 
 def descuentoProductos(request):
     return render(request, 'descuentoProductos.html')
@@ -83,7 +84,9 @@ def agregar_producto(request):
         proveedor_id = request.POST.get('proveedor')
 
         
-        
+        categoria = Categoria.objects.get(pk=categoria_id)
+        proveedor = Proveedor.objects.get(pk=proveedor_id)
+
 
         
         nuevo_producto = Producto(
@@ -91,8 +94,8 @@ def agregar_producto(request):
             descripcion=descripcion_producto,
             cantidad=cantidad_producto,
             precio=precio_producto,
-            categoria_id=categoria_id,
-            proveedor_id=proveedor_id
+            categoria_id=categoria,
+            proveedor_id=proveedor
             
         )
         nuevo_producto.save()
