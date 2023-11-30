@@ -23,13 +23,13 @@
           <td>{{ proveedor.direccion }}</td>
           <td>{{ proveedor.ciudad }}</td>
           <td>
-              <a href="{% url 'editar_proveedor' proveedor.id %}" class="btn btn-primary">Editar</a>
-              <button class="btn btn-danger">Eliminar</button>
+              <a href="" class="btn btn-primary">Editar</a>
+              <a class="btn btn-danger" href="{% url 'eliminar_proveedor' proveedor.id  %}" >Eliminar</a>
           </td>
       </tr>
       {% endfor %}
   </tbody>             
   </table>
-  <button class="btn btn-primary">Agregar</button>
+  <a class="btn btn-primary" href="{% url 'agregar_proveedor'  %}" >Agregar</a>
 {% endblock %}
 

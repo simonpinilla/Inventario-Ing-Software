@@ -19,7 +19,9 @@ def inventario(request):
 
 @login_required(login_url='login')
 def proveedores(request):
-    return render(request, 'prove.html')
+    proveedores = Proveedor.objects.all()
+    return render(request, 'prove.html',{"proveedores" : proveedores})
+
 
 def dashboard(request):
     return render(request, 'dashboard.html')
@@ -52,6 +54,24 @@ def agregar_categoria(request):
 
     return render(request, 'agregarCategoria.html')  # Renderiza la plantilla del formulario
 
+def agregar_proveedor(request):
+    if request.method == 'POST':
+        nombre_proveedor = request.POST.get('nombre_proveedor')
+        telefono = request.POST.get('telefono')
+        direccion = request.POST.get('direccion')
+        ciudad = request.POST.get('ciudad')
+
+        print(f'Nombre de la categoría: {nombre_proveedor}')
+        print(f'Descripción de la categoría: {telefono}')
+        print(f'Descripción de la categoría: {direccion}')
+        print(f'Descripción de la categoría: {ciudad}')
+        print("aqui")
+
+        # Crea y guarda la nueva categoría
+        proveedor = Proveedor(nombre=nombre_proveedor, telefono=telefono, direccion= direccion, ciudad=ciudad  )
+        proveedor.save()
+        return redirect('proveedores')  # Redirige a la vista deseada después de agregar la categoría
+    return render(request, 'agregarProveedor.html')  # Renderiza la plantilla del formulario
 
 def agregar_producto(request):
     if request.method == 'POST':
@@ -82,7 +102,11 @@ def agregar_producto(request):
     
     return render(request, 'agregarProducto')
 
-    
+
+def eliminar_proveedor(request, id):
+    proveedor = Proveedor.objects.get(id = id)
+    proveedor.delete()
+    return redirect('proveedores')
 
 def registro(request):
     if request.method == 'POST':
