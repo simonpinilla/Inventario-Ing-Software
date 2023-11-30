@@ -1,58 +1,60 @@
 {% extends 'layout/app2.html' %}
 {% load static %}
 {% block body %}
-<h2 class="mb-4">Proveedores</h2>
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Telefono</th>
-        <th scope="col">Dirección</th>
-        <th scope="col">Ciudad</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for proveedor in proveedores %}
-      <tr>
-          <th scope="row">{{ proveedor.id }}</th>
-          <td>{{ proveedor.nombre }}</td>
-          <td>{{ proveedor.telefono }}</td>
-          <td>{{ proveedor.direccion }}</td>
-          <td>{{ proveedor.ciudad }}</td>
-          <td>
-              <a href="{% url 'editar_proveedor' proveedor.id %}" class="btn btn-primary">Editar</a>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                Eliminar
-              </button>
-          </td>
-          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <a  class="modal-title" id="exampleModalLongTitle">¿Está seguro?</a>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  Desea eliminar al proveedor?
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <a type="submit" href="{% url 'eliminar_proveedor' proveedor.id  %}" class="btn btn-primary">Eliminar</a>
+<div class="container-fluid px-4">
+  <h2 class="mb-4">Proveedores</h2>
+  <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Dirección</th>
+          <th scope="col">Ciudad</th>
+          <th></th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for proveedor in proveedores %}
+        <tr>
+            <th scope="row">{{ proveedor.id }}</th>
+            <td>{{ proveedor.nombre }}</td>
+            <td>{{ proveedor.telefono }}</td>
+            <td>{{ proveedor.direccion }}</td>
+            <td>{{ proveedor.ciudad }}</td>
+            <td>
+                <a href="{% url 'editar_proveedor' proveedor.id %}" class="btn btn-primary">Editar</a>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                  Eliminar
+                </button>
+            </td>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <a  class="modal-title" id="exampleModalLongTitle">¿Está seguro?</a>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Desea eliminar al proveedor?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a type="submit" href="{% url 'eliminar_proveedor' proveedor.id  %}" class="btn btn-primary">Eliminar</a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-      </tr>
+        </tr>
 
-      {% endfor %}
-  </tbody>             
-  </table>
-  <a class="btn btn-primary" href="{% url 'agregar_proveedor'  %}" >Agregar</a>
+        {% endfor %}
+    </tbody>             
+    </table>
+    <a class="btn btn-primary" href="{% url 'agregar_proveedor'  %}" >Agregar</a>
+</div>
 
 {% endblock %}
 
