@@ -102,7 +102,11 @@ def agregar_producto(request):
     categorias = Categoria.objects.all()  # Obtener todas las categorías disponibles
     return render(request, 'agregarProducto', {'categorias': categorias})
 
-    
+
+def eliminar_proveedor(request, id):
+    proveedor = Proveedor.objects.get(id = id)
+    proveedor.delete()
+    return redirect('proveedores')
 
 def registro(request):
     if request.method == 'POST':

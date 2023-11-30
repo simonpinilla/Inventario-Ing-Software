@@ -24,7 +24,7 @@
           <td>{{ proveedor.ciudad }}</td>
           <td>
               <a href="" class="btn btn-primary">Editar</a>
-              <button class="btn btn-danger">Eliminar</button>
+              <a class="btn btn-danger" href="{% url 'eliminar_proveedor' proveedor.id  %}" >Eliminar</a>
           </td>
       </tr>
       {% endfor %}
