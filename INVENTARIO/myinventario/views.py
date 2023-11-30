@@ -35,17 +35,14 @@ def agregarCategoria(request):
 
 def agregarProducto(request):
     categorias = Categoria.objects.all()
-    return render(request, 'agregarProducto.html', {'categorias': categorias})
+    proveedores = Proveedor.objects.all()
+    return render(request, 'agregarProducto.html', {'categorias': categorias, 'proveedores': proveedores})
 
 
 def agregar_categoria(request):
     if request.method == 'POST':
         nombre_categoria = request.POST.get('nombre_categoria')
         descripcion_categoria = request.POST.get('descripcion_categoria')
-
-        print(f'Nombre de la categoría: {nombre_categoria}')
-        print(f'Descripción de la categoría: {descripcion_categoria}')
-        print("aqui")
 
         # Crea y guarda la nueva categoría
         nueva_categoria = Categoria(nombre=nombre_categoria, descripcion=descripcion_categoria)
@@ -63,24 +60,27 @@ def agregar_producto(request):
         cantidad_producto = request.POST.get('cantidad_producto')
         precio_producto = request.POST.get('precio_producto')
         categoria_id = request.POST.get('categoria_producto')
+        proveedor_id = request.POST.get('proveedor')
 
-        # Obtener la categoría seleccionada
-        categoria_seleccionada = Categoria.objects.get(id=categoria_id)
+        
+        
 
-        # Crear y guardar el nuevo producto con la categoría seleccionada
+        
         nuevo_producto = Producto(
             nombre=nombre_producto,
             descripcion=descripcion_producto,
             cantidad=cantidad_producto,
             precio=precio_producto,
-            categoria_id=categoria_seleccionada
+            categoria_id=categoria_id,
+            proveedor_id=proveedor_id
+            
         )
         nuevo_producto.save()
 
-        return redirect('productos')  # Redirige a la vista deseada después de agregar el producto
+        return redirect('productos')
 
-    categorias = Categoria.objects.all()  # Obtener todas las categorías disponibles
-    return render(request, 'agregarProducto', {'categorias': categorias})
+    
+    return render(request, 'agregarProducto')
 
     
 

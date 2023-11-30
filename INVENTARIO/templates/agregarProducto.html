@@ -29,6 +29,14 @@
             {% endfor %}
         </select>
     </div>
+    <div class="form-group">
+        <label for="id_proveedor">Proveedor:</label>
+        <select class="form-control" id="id_proveedor" name="proveedor">
+            {% for proveedor in proveedores %}
+                <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
     <button type="submit" class="btn btn-primary">Agregar Producto</button>
 </form>
 {% endblock %}
