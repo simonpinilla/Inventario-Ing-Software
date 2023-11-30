@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
@@ -62,17 +62,23 @@ def agregar_proveedor(request):
         direccion = request.POST.get('direccion')
         ciudad = request.POST.get('ciudad')
 
-        print(f'Nombre de la categoría: {nombre_proveedor}')
-        print(f'Descripción de la categoría: {telefono}')
-        print(f'Descripción de la categoría: {direccion}')
-        print(f'Descripción de la categoría: {ciudad}')
-        print("aqui")
-
-        # Crea y guarda la nueva categoría
         proveedor = Proveedor(nombre=nombre_proveedor, telefono=telefono, direccion= direccion, ciudad=ciudad  )
         proveedor.save()
-        return redirect('proveedores')  # Redirige a la vista deseada después de agregar la categoría
-    return render(request, 'agregarProveedor.html')  # Renderiza la plantilla del formulario
+        return redirect('proveedores')
+    return render(request, 'agregarProveedor.html')  
+
+
+def editar_proveedor(request, proveedor_id):
+    proveedor = get_object_or_404(Proveedor, pk=proveedor_id)
+    if request.method == 'POST':
+        proveedor.nombre = request.POST.get('nombre')
+        proveedor.telefono = request.POST.get('telefono')
+        proveedor.direccion = request.POST.get('direccion')
+        proveedor.ciudad = request.POST.get('ciudad')
+        proveedor.save()
+        return redirect('proveedores')
+    return render(request, 'editarProveedor.html', {'proveedor': proveedor})
+
 
 def agregar_producto(request):
     if request.method == 'POST':
