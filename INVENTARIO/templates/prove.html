@@ -23,7 +23,7 @@
           <td>{{ proveedor.direccion }}</td>
           <td>{{ proveedor.ciudad }}</td>
           <td>
-              <a href="" class="btn btn-primary">Editar</a>
+              <a href="{% url 'editar_proveedor' proveedor.id %}" class="btn btn-primary">Editar</a>
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                 Eliminar
               </button>

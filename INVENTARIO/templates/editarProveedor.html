@@ -1,0 +1,26 @@
+{% extends 'layout/app2.html' %}
+{% load static %}
+
+{% block body %}
+<h2>Editar Proveedor</h2>
+<form method="post" action="{% url 'editar_proveedor' proveedor.id %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_nombre_proveedor">Nombre del proveedor</label>
+        <input type="text" class="form-control" id="id_nombre_proveedor" name="nombre" value="{{ proveedor.nombre }}">
+    </div>
+    <div class="form-group">
+        <label for="id_telefono">Telefono</label>
+        <input type="text" class="form-control" id="id_telefono" name="telefono" value="{{ proveedor.telefono }}">
+    </div>
+    <div class="form-group">
+        <label for="direccion">Direccion</label>
+        <input type="text" class="form-control" id="direccion" name="direccion" value="{{ proveedor.direccion }}">
+    </div>
+    <div class="form-group">
+        <label for="ciudad">Ciudad</label>
+        <input type="text" class="form-control" id="ciudad" name="ciudad" value="{{ proveedor.ciudad }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>
+{% endblock %}
