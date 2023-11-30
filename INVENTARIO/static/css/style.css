@@ -57,13 +57,20 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #836800c9; }
+   }
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }
 
 
 
+.bg-custom-gradient {
+  /* Aquí defines el gradiente personalizado */
+  background-image: linear-gradient(to bottom, #ffcc00, #ff6600);
+  /* Otros estilos opcionales */
+  /* height: 100vh; */
+  /* width: 100%; */
+}
 hr {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
@@ -8139,7 +8146,7 @@ body {
   font-size: 14px;
   line-height: 1.8;
   font-weight: normal;
-  background: #fafafa;
+  background-color: #000;
   color: gray; }
 
 a {

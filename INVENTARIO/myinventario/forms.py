@@ -24,6 +24,14 @@ class MiUsuarioCreationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.fields['usuario'].widget.attrs.update({'class': 'form-control'})
+        self.fields['correo'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'form-control'})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'form-control'})
+
+        
+        
         # Eliminar los mensajes de validación de contraseña
         self.fields['password1'].help_text = None
         self.fields['password1'].validators = []
