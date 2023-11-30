@@ -55,7 +55,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #212529;
+  color: #c5c7c9;
   text-align: left;
    }
 
@@ -64,13 +64,7 @@ body {
 
 
 
-.bg-custom-gradient {
-  /* Aquí defines el gradiente personalizado */
-  background-image: linear-gradient(to bottom, #ffcc00, #ff6600);
-  /* Otros estilos opcionales */
-  /* height: 100vh; */
-  /* width: 100%; */
-}
+
 hr {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
@@ -8146,7 +8140,7 @@ body {
   font-size: 14px;
   line-height: 1.8;
   font-weight: normal;
-  background-color: #000;
+  background-color: rgba(108, 117, 125, 0.5);
   color: gray; }
 
 a {
@@ -8224,7 +8218,7 @@ h1, h2, h3, h4, h5,
 #sidebar {
   min-width: 300px;
   max-width: 300px;
-  background: #1d1919;
+  background: #212529;
   color: #fff;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
