@@ -89,12 +89,9 @@ def agregar_producto(request):
         categoria_id = request.POST.get('categoria_producto')
         proveedor_id = request.POST.get('proveedor')
 
-        
         categoria = Categoria.objects.get(pk=categoria_id)
         proveedor = Proveedor.objects.get(pk=proveedor_id)
 
-
-        
         nuevo_producto = Producto(
             nombre=nombre_producto,
             descripcion=descripcion_producto,
@@ -102,14 +99,42 @@ def agregar_producto(request):
             precio=precio_producto,
             categoria_id=categoria,
             proveedor_id=proveedor
-            
         )
         nuevo_producto.save()
 
         return redirect('productos')
-
-    
     return render(request, 'agregarProducto')
+
+def editar_producto(request, producto_id):
+    producto = get_object_or_404(Producto, pk=producto_id)
+
+    if request.method == 'POST':
+        nombre_producto = request.POST.get('nombre_producto')
+        descripcion_producto = request.POST.get('descripcion_producto')
+        cantidad_producto = request.POST.get('cantidad_producto')
+        precio_producto = request.POST.get('precio_producto')
+        categoria_id = request.POST.get('categoria_producto')
+        proveedor_id = request.POST.get('proveedor')
+
+        categoria = Categoria.objects.get(pk=categoria_id)
+        proveedor = Proveedor.objects.get(pk=proveedor_id)
+        
+        producto.nombre = nombre_producto
+        producto.descripcion = descripcion_producto
+        producto.cantidad = cantidad_producto
+        producto.precio = precio_producto
+        producto.categoria_id = categoria
+        producto.proveedor_id = proveedor
+        producto.save()
+        return redirect('productos') 
+    categorias = Categoria.objects.all()
+    proveedores = Proveedor.objects.all()
+    return render(request, 'editarProducto.html', {'producto': producto, 'categorias': categorias, 'proveedores': proveedores})
+
+def eliminar_producto(request, id):
+    producto = Producto.objects.get(id = id)
+    producto.delete()
+    return redirect('productos')
 
 
 def eliminar_proveedor(request, id):

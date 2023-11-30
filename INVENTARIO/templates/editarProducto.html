@@ -1,0 +1,42 @@
+{% extends 'layout/app2.html' %}
+{% load static %}
+
+{% block body %}
+<h1>Editar Producto</h1>
+<form method="post" action="{% url 'editar_producto' producto.id %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_nombre_producto">Nombre:</label>
+        <input type="text" class="form-control" id="id_nombre_producto" name="nombre_producto" value="{{ producto.nombre }}">
+    </div>
+    <div class="form-group">
+        <label for="id_descripcion_producto">Descripción:</label>
+        <input type="text" class="form-control" id="id_descripcion_producto" name="descripcion_producto" value="{{ producto.descripcion }}">
+    </div>
+    <div class="form-group">
+        <label for="id_cantidad_producto">Cantidad:</label>
+        <input type="text" class="form-control" id="id_cantidad_producto" name="cantidad_producto" value="{{ producto.cantidad }}">
+    </div>
+    <div class="form-group">
+        <label for="id_precio_producto">Precio:</label>
+        <input type="text" class="form-control" id="id_precio_producto" name="precio_producto" value="{{ producto.precio }}">
+    </div>
+    <div class="form-group">
+        <label for="id_categoria_producto">Categoría:</label>
+        <select class="form-control" id="id_categoria_producto" name="categoria_producto">
+            {% for categoria in categorias %}
+                <option value="{{ categoria.id }}" {% if categoria.id == producto.categoria_id.id %}selected{% endif %}>{{ categoria.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_proveedor">Proveedor:</label>
+        <select class="form-control" id="id_proveedor" name="proveedor">
+            {% for proveedor in proveedores %}
+                <option value="{{ proveedor.id }}" {% if proveedor.id == producto.proveedor_id.id %}selected{% endif %}>{{ proveedor.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>
+{% endblock %}

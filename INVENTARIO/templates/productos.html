@@ -26,7 +26,7 @@
           <td>{{ producto.precio }}</td>
           <td>{{ producto.proveedor_id }}</td>
           <td>
-              <a href="" class="btn btn-primary">Editar</a>
+              <a href="{% url 'editar_producto' producto.id %}" class="btn btn-primary">Editar</a>
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                 Eliminar
               </button>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <a type="submit" href="#" class="btn btn-primary">Eliminar</a>
+                  <a type="submit" href="{% url 'eliminar_producto' producto.id  %}" class="btn btn-primary">Eliminar</a>
                 </div>
               </div>
             </div>
