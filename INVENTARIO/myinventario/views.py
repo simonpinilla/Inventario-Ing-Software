@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-
+from django.http import JsonResponse
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from .forms import *
+
+
 
 # Create your views here
 def logoutView(request):
@@ -41,7 +43,16 @@ def agregarProducto(request):
     proveedores = Proveedor.objects.all()
     return render(request, 'agregarProducto.html', {'categorias': categorias, 'proveedores': proveedores})
 
-
+def buscar_productos(request):
+    query = request.GET.get('query', '')
+    productos = Producto.objects.filter(nombre__icontains=query)
+    
+    if productos.exists():
+        # Serialización manual a JSON
+        serialized_productos = list(productos.values('id', 'nombre','cantidad','precio'))
+        return JsonResponse({'productos': serialized_productos}, safe=False)
+    else:
+        return JsonResponse({'message': 'No se encontraron productos.'})
 def agregar_categoria(request):
     if request.method == 'POST':
         nombre_categoria = request.POST.get('nombre_categoria')

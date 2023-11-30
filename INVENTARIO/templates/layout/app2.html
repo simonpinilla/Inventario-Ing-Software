@@ -104,9 +104,88 @@
 		</div>
 
     <script src="../../static/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../static/js/popper.js"></script>
     <script src="../../static/js/bootstrap.min.js"></script>
     <script src="../../static/js/main.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('#btn_agregar_producto').on('click', function() {
+              var productoSeleccionado = $('#id_productos option:selected').text();
+              var cantidadSeleccionada = $('#id_cantidad').val();
+  
+              // Validar la entrada del usuario (cantidad)
+              if (cantidadSeleccionada === '') {
+                  alert('Por favor, ingrese una cantidad.');
+                  return;
+              }
+  
+              // Agregar una fila a la tabla de productos seleccionados
+              var fila = '<tr>' +
+                              '<td>' + productoSeleccionado + '</td>' +
+                              '<td>' + cantidadSeleccionada + '</td>' +
+                              '<td><button type="button" class="btn btn-danger btn-sm eliminar-producto">Eliminar</button></td>' +
+                          '</tr>';
+              $('#tabla_productos_seleccionados').append(fila);
+          });
+  
+          // Eliminar producto al hacer clic en el botón "Eliminar"
+          $(document).on('click', '.eliminar-producto', function() {
+              $(this).closest('tr').remove();
+          });
+      });
+      $(document).on('click', '.btn_agregar_producto', function() {
+            var filaEncontrada = $(this).closest('tr');
+            var productoSeleccionado = {
+                nombre: filaEncontrada.find('td:eq(0)').text(),
+                cantidad: filaEncontrada.find('td:eq(1)').text(),
+                precio: filaEncontrada.find('td:eq(2)').text()
+            };
+
+            var fila = '<tr>' +
+                            '<td>' + productoSeleccionado.nombre + '</td>' +
+                            '<td>' + productoSeleccionado.cantidad + '</td>' +
+                            '<td>' + productoSeleccionado.precio + '</td>' +
+                            '<td><button type="button" class="btn btn-danger btn-sm eliminar-producto">Eliminar</button></td>' +
+                        '</tr>';
+            $('#tabla_productos_seleccionados').append(fila);
+        });
+      $('#btn_buscar').on('click', function() {
+          var query = $('#id_buscar_producto').val();
+          if (query !== '') {
+              $.ajax({
+                  url: "{% url 'buscar_productos' %}",  // URL de la vista para buscar productos
+                  method: 'GET',
+                  data: {'query': query},
+                  dataType: 'json',
+                  success: function(data) {
+                    if (Array.isArray(data.productos)) {
+                      // Verificar si los datos son una matriz
+                      $('#tabla_productos_buscados').empty();
+                          // Iterar sobre la matriz de productos
+                      data.productos.forEach(function(producto) {
+                          var fila = '<tr>' +
+                                          '<td>' + producto.nombre + '</td>' +
+                                          '<td>' + producto.cantidad + '</td>' +
+                                          '<td>' + producto.precio + '</td>' +
+                                          '<td><button type="button" class="btn btn-primary btn_agregar_producto">Agregar</button></td>' +
+                                          
+                                      '</tr>';
+                          $('#tabla_productos_buscados').append(fila);
+                      });
+                              
+                      } else {
+                          alert('No se encontraron productos.');
+                      }
+                  },
+                  error: function() {
+                      alert('Error al buscar productos.');
+                  }
+              });
+          }
+      });
+    </script>
+
+    
   </body>
 </html>

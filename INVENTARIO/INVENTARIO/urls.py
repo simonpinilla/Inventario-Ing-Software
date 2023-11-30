@@ -28,6 +28,7 @@ urlpatterns = [
     path('dashboard/',dashboard,name="dashboard"),
     path('productos/',productos,name="productos"),
     path('agrergarOrden/',agregar_orden,name="agregar_orden"),
+     path('buscar_productos/', buscar_productos, name='buscar_productos'),
     path('agregarCategoria/',agregarCategoria,name="agregarCategoria"),
     path('agregar_categoria/', agregar_categoria, name='agregar_categoria'),
     path('agregarProducto/', agregarProducto, name='agregarProducto'),
