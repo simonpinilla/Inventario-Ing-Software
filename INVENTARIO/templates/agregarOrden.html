@@ -1,0 +1,35 @@
+{% extends 'layout/app2.html' %}
+{% load static %}
+
+{% block body %}
+<form method="post">
+  {% csrf_token %}
+  <div class="form-group">
+      <label for="id_buscar_producto">Buscar Producto</label>
+      <input type="text" class="form-control" id="id_buscar_producto" name="buscar_producto" placeholder="Buscar producto...">
+  </div>
+  <select multiple class="form-control" id="id_productos" name="productos">
+      {% for producto in productos_disponibles %}
+          <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+      {% endfor %}
+  </select>
+  <div class="form-group">
+      <label for="id_cantidad">Cantidad</label>
+      <input type="number" step="1" class="form-control" id="id_cantidad" name="cantidad" placeholder="Enter quantity">
+  </div>
+  <button type="button" class="btn btn-primary" id="btn_agregar_producto">Añadir producto</button>
+  <button type="submit" class="btn btn-success" name="realizar_venta">Realizar venta</button>
+
+  <table class="table">
+      <thead>
+          <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+          </tr>
+      </thead>
+      <tbody id="tabla_productos_seleccionados">
+          <!-- Aquí se mostrarán los productos seleccionados -->
+      </tbody>
+  </table>
+</form>
+{% endblock %}

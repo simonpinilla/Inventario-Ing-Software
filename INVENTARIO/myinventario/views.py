@@ -30,8 +30,8 @@ def productos(request):
     productos= Producto.objects.all()
     return render(request, 'productos.html',{"productos" : productos})
 
-def descuentoProductos(request):
-    return render(request, 'descuentoProductos.html')
+def agregar_orden(request):
+    return render(request, 'agregarOrden.html')
 
 def agregarCategoria(request):
     return render(request, 'agregarCategoria.html')
@@ -97,8 +97,8 @@ def agregar_producto(request):
             descripcion=descripcion_producto,
             cantidad=cantidad_producto,
             precio=precio_producto,
-            categoria_id=categoria,
-            proveedor_id=proveedor
+            categoria=categoria,
+            proveedor=proveedor
         )
         nuevo_producto.save()
 

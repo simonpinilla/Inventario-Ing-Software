@@ -52,7 +52,7 @@ class MiUsuario(AbstractBaseUser):
 
 class Orden(models.Model):
     fecha = models.DateField()
-    id_usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(MiUsuario, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"ID: {self.id} - Fecha: {self.fecha} - Usuario: {self.id_usuario}"
@@ -81,8 +81,8 @@ class Producto(models.Model):
     descripcion = models.CharField(max_length=20)
     cantidad = models.IntegerField()
     precio = models.CharField(max_length=20)
-    categoria_id = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    proveedor_id = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
 
     
 
@@ -92,8 +92,8 @@ class Producto(models.Model):
 
 class DetalleOrden(models.Model):
     cantidad_producto = models.IntegerField()
-    orden_id = models.ForeignKey(Orden, on_delete=models.CASCADE)
-    producto_id = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    orden = models.ForeignKey(Orden, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
 
     
 
