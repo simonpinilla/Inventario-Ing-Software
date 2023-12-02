@@ -6,19 +6,19 @@
     {% csrf_token %}
     <div class="form-group" >
         <label for="id_nombre_proveedor">Nombre del proveedor</label>
-        <input type="text" class="form-control" id="id_nombre_proveedor" name="nombre_proveedor" placeholder="Nombre del proveedor...">
+        <input type="text" class="form-control" required id="id_nombre_proveedor" name="nombre_proveedor" placeholder="Nombre del proveedor...">
     </div>
     <div class="form-group">
         <label for="id_telefono">Telefono</label>
-        <input type="text" class="form-control" id="id_telefono" name="telefono" placeholder="Telefono 912345678...">
+        <input type="text" class="form-control" required id="id_telefono" name="telefono" placeholder="Telefono 912345678...">
     </div>
     <div class="form-group">
         <label for="direccion">Direccion</label>
-        <input type="text" class="form-control" id="direccion" name="direccion" placeholder="direccion...">
+        <input type="text" class="form-control" required id="direccion" name="direccion" placeholder="direccion...">
     </div>
     <div class="form-group">
         <label for="ciudad">Ciudad</label>
-        <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="ciudad...">
+        <input type="text" class="form-control" required id="ciudad" name="ciudad" placeholder="ciudad...">
     </div>
     <button type="submit" class="btn btn-primary">Agregar Proveedor</button>
 </form>

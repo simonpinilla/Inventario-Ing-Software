@@ -2,29 +2,25 @@
 {% load static %}
 {% block body %}
 <div class="container-fluid px-4">
-  <h2 class="mb-4">Proveedores</h2>
+  <h2 class="mb-4">Categorias</h2>
   <table class="table table-striped">
       <thead class="table-dark">
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Nombre</th>
-          <th scope="col">Telefono</th>
-          <th scope="col">Dirección</th>
-          <th scope="col">Ciudad</th>
+          <th scope="col">Descripcion</th>
           <th></th>
           
         </tr>
       </thead>
       <tbody>
-        {% for proveedor in proveedores %}
+        {% for categoria in categorias %}
         <tr>
-            <th scope="row">{{ proveedor.id }}</th>
-            <td>{{ proveedor.nombre }}</td>
-            <td>{{ proveedor.telefono }}</td>
-            <td>{{ proveedor.direccion }}</td>
-            <td>{{ proveedor.ciudad }}</td>
+            <th scope="row">{{ categoria.id }}</th>
+            <td>{{ categoria.nombre }}</td>
+            <td>{{ categoria.descripcion }}</td>
             <td>
-                <a href="{% url 'editar_proveedor' proveedor.id %}" class="btn btn-primary">Editar</a>
+                <a href="{% url 'editar_categoria' categoria.id %}" class="btn btn-primary">Editar</a>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                   Eliminar
                 </button>
@@ -39,11 +35,12 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    Desea eliminar al proveedor? si lo elimina se eliminaran todos los productos enlasados con este proveedor!!
+                    Desea eliminar la Categoria?, 
+                    si la elimina se eliminaran todos los productos enlasados con la categoria
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a type="submit" href="{% url 'eliminar_proveedor' proveedor.id  %}" class="btn btn-primary">Eliminar</a>
+                    <a type="submit" href="{% url 'eliminar_categoria' categoria.id  %}" class="btn btn-primary">Eliminar</a>
                   </div>
                 </div>
               </div>
@@ -53,9 +50,7 @@
         {% endfor %}
     </tbody>             
     </table>
-    <a class="btn btn-primary" href="{% url 'agregar_proveedor'  %}" >Agregar</a>
+    <a class="btn btn-primary" href="{% url 'agregar_categoria'  %}" >Agregar</a>
     <a class="btn btn-danger float-end" href="{% url 'dashboard'  %}" >Volver</a>
 </div>
-
 {% endblock %}
-

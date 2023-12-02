@@ -1,0 +1,18 @@
+{% extends 'layout/app2.html' %}
+{% load static %}
+
+{% block body %}
+<h2>Editar Categoriar</h2>
+<form method="post" action="{% url 'editar_categoria' categoria.id %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_nombre_categoria">Nombre de la categoria</label>
+        <input type="text" class="form-control" id="id_nombre_categoria" name="nombre" value="{{ categoria.nombre }}">
+    </div>
+    <div class="form-group">
+        <label for="id">Descripcion</label>
+        <input type="text" class="form-control" id="id" name="descripcion" value="{{ categoria.descripcion }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>
+{% endblock %}
