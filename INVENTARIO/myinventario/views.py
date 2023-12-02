@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from .forms import *
+from functools import reduce
 
 
 
@@ -30,7 +31,8 @@ def dashboard(request):
 
 def productos(request):
     productos= Producto.objects.all()
-    return render(request, 'productos.html',{"productos" : productos})
+    bajo_stock = reduce(lambda x, y: x or y.cantidad < 10, productos, False)
+    return render(request, 'productos.html', {"productos": productos, "bajo_stock": bajo_stock})
 
 def agregar_orden(request):
     return render(request, 'agregarOrden.html')
