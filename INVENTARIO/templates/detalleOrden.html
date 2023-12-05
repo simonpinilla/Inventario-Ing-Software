@@ -1,0 +1,90 @@
+{% extends 'layout/app.html' %}
+{% load static %}
+
+{% block body %}
+<form method="post" id="detalle-orden-form" action="{% url 'procesar_orden' %}">
+    {% csrf_token %}
+  
+    <div class="form-group">
+        <label for="id_buscar_producto">Buscar Producto</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="id_buscar_producto"name="buscar_producto" placeholder="Buscar producto...">
+            <div class="input-group-append">
+                <button type="button" id="btn_buscar" data-url="{% url 'buscar_productos' %}">Buscar</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Producto</th>
+                <th>Stock</th>
+                <th>Precio</th>
+                <th>Acción</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tabla_productos_buscados">
+            <!-- Aquí se mostrarán los productos encontrados -->
+            <tr>
+                
+            </tr>
+            <!-- Más filas aquí -->
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto Seleccionado</th>
+                <th>ID</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="tabla_productos_seleccionados">
+            <!-- Aquí se mostrarán los productos seleccionados -->
+            <tr>
+                
+            </tr>
+            <!-- Más filas aquí -->
+        </tbody>
+    </table>
+    <div>
+        <h1>Total:$ <span id="precio-total">0.00</span></h1>
+        <p>Cantidad Total: <span id="cantidad-total">0</span></p>
+    </div>
+    {% for producto in productos_seleccionados %}
+        <input type="hidden" name="productos_seleccionados_ids" value="{{ producto.id }}">
+        <input type="hidden" name="cantidad_producto_{{ producto.id }}" value="{{ producto.cantidad_seleccionada }}">
+    {% endfor %}
+
+
+    <button type="submit" class="btn btn-success" name="realizar_orden">Realizar Orden</button>
+</form>
+{% if orden_procesada_exitosamente %}
+    <div class="modal fade" id="ordenProcesadaModal" tabindex="-1" role="dialog" aria-labelledby="ordenProcesadaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="ordenProcesadaModalLabel">¡Orden procesada exitosamente!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            Tu contenido aquí...
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <!-- Otros botones u opciones si es necesario -->
+            </div>
+        </div>
+        </div>
+    </div>
+    
+{% endif %}
+{% endblock %}

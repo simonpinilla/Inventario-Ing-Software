@@ -1,4 +1,4 @@
-{% extends 'layout/app2.html' %}
+{% extends 'layout/app.html' %}
 {% load static %}
 {% block body %}
 <div class="container-fluid px-4">
@@ -22,7 +22,7 @@
             <div class="card bg-warning text-white mb-4">
                 <div class="card-body">Productos</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{% url 'productos'%}">View Details</a>
+                    <a class="small text-white stretched-link" href="{% url 'productos'%}">Ver detalles</a>
                     <div class="small text-white"><span class="material-symbols-outlined">
                         arrow_right_alt
                         </span></div>
@@ -33,7 +33,7 @@
             <div class="card bg-success text-white mb-4">
                 <div class="card-body">Generar Orden</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{% url 'agregar_orden'%}">View Details</a>
+                    <a class="small text-white stretched-link" href="{% url 'detalle_orden'%}">Ver detalles</a>
                     <div class="small text-white"><span class="material-symbols-outlined">
                         arrow_right_alt
                         </span></div>
@@ -44,7 +44,7 @@
             <div class="card bg-danger text-white mb-4">
                 <div class="card-body">Categorias</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{% url 'categorias'%}">View Details</a>
+                    <a class="small text-white stretched-link" href="{% url 'categorias'%}">Ver detalles</a>
                     <div class="small text-white"><span class="material-symbols-outlined">
                         arrow_right_alt
                         </span></i></div>

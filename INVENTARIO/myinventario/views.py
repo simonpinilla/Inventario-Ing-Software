@@ -7,6 +7,10 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from .forms import *
 from functools import reduce
+from django.shortcuts import render
+from django.utils import timezone
+from django.http import HttpResponseServerError
+from django.http import *
 
 
 
@@ -39,8 +43,8 @@ def productos(request):
     bajo_stock = reduce(lambda x, y: x or y.cantidad < 10, productos, False)
     return render(request, 'productos.html', {"productos": productos, "bajo_stock": bajo_stock})
 
-def agregar_orden(request):
-    return render(request, 'agregarOrden.html')
+def detalle_orden(request):
+    return render(request, 'detalleOrden.html')
 
 def agregarCategoria(request):
     return render(request, 'agregarCategoria.html')
@@ -73,6 +77,46 @@ def agregar_categoria(request):
 
     return render(request, 'agregarCategoria.html')  # Renderiza la plantilla del formulario
 
+def procesar_orden(request):
+    if request.method == 'POST':
+        try:
+            productos_seleccionados_ids = request.POST.getlist('productos_seleccionados_ids')
+            productos_seleccionados_ids = [id for id in productos_seleccionados_ids if id != '']
+            print("Productos Seleccionados IDs:", productos_seleccionados_ids)
+
+            usuario = request.user
+            nueva_orden = Orden.objects.create(fecha=timezone.now(), usuario=usuario)
+            
+            for producto_id in productos_seleccionados_ids:
+                try:
+                    producto = Producto.objects.get(pk=producto_id)
+                    cantidad_seleccionada = request.POST.get(f'cantidad_producto_{producto_id}')
+
+                    if producto.cantidad >= int(cantidad_seleccionada) > 0:
+                        producto.cantidad -= int(cantidad_seleccionada)
+                        producto.save()
+
+                        detalle = DetalleOrden.objects.create(
+                            cantidad_producto=cantidad_seleccionada,
+                            orden=nueva_orden,
+                            producto=producto
+                        )
+                        detalle.save()
+                    else:
+                        return HttpResponseServerError("Cantidad seleccionada no válida para el producto.")
+
+                except Producto.DoesNotExist:
+                    return HttpResponseServerError("Producto no encontrado.")
+
+            # Operaciones después de procesar la orden
+
+            return render(request, 'dashboard.html', {'orden_procesada_exitosamente': True})
+        
+        except Exception as e:
+            print("Error:", e)
+            return HttpResponseServerError("Error al procesar la orden. Contacta al administrador.")
+    
+    return render(request, 'dashboard.html')
 def agregar_proveedor(request):
     if request.method == 'POST':
         nombre_proveedor = request.POST.get('nombre_proveedor')
