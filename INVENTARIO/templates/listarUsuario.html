@@ -1,0 +1,27 @@
+{% extends 'layout/app.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title mb-4 text-center ">Información de la Cuenta</h2>
+          {% if user.is_authenticated %}
+            <div class="mb-3">
+              <strong>Usuario:</strong> {{ user.usuario }}
+            </div>
+            <div class="mb-3">
+              <strong>Correo:</strong> {{ user.correo }}
+            </div>
+          {% else %}
+            <p class="text-muted text-center">No hay usuario logueado.</p>
+          {% endif %}
+            <a href="{% url 'editar_usuario'%}" type="submit" class="btn btn-primary btn-block mt-3">Editar Datos</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -24,6 +24,25 @@ def inventario(request):
     return render(request, 'index.html')
 
 
+@login_required
+def cuenta(request):
+    usuario = request.user  # Objeto de usuario disponible para usuarios autenticados
+    context = {'usuario': usuario}
+    return render(request, 'listarUsuario.html', context)
+
+@login_required
+def editar_usuario(request):
+    usuario = request.user
+    if request.method == 'POST':
+        form = MiUsuarioCreationForm(request.POST, instance=usuario)
+        if form.is_valid():
+            form.save()
+            return redirect('login')  
+    else:
+        form = MiUsuarioCreationForm(instance=usuario)
+    return render(request, 'editarUsuario.html', {'form': form})
+
+
 @login_required(login_url='login')
 def proveedores(request):
     proveedores = Proveedor.objects.all()
@@ -83,7 +102,6 @@ def procesar_orden(request):
             productos_seleccionados_ids = request.POST.getlist('productos_seleccionados_ids')
             productos_seleccionados_ids = [id for id in productos_seleccionados_ids if id != '']
             print("Productos Seleccionados IDs:", productos_seleccionados_ids)
-
             usuario = request.user
             nueva_orden = Orden.objects.create(fecha=timezone.now(), usuario=usuario)
             
@@ -104,19 +122,16 @@ def procesar_orden(request):
                         detalle.save()
                     else:
                         return HttpResponseServerError("Cantidad seleccionada no válida para el producto.")
-
                 except Producto.DoesNotExist:
                     return HttpResponseServerError("Producto no encontrado.")
-
-            # Operaciones después de procesar la orden
-
             return render(request, 'dashboard.html', {'orden_procesada_exitosamente': True})
-        
         except Exception as e:
             print("Error:", e)
             return HttpResponseServerError("Error al procesar la orden. Contacta al administrador.")
-    
     return render(request, 'dashboard.html')
+
+
+
 def agregar_proveedor(request):
     if request.method == 'POST':
         nombre_proveedor = request.POST.get('nombre_proveedor')
