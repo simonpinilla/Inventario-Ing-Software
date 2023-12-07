@@ -1,0 +1,36 @@
+{% extends 'layout/app.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-4">Listado de Órdenes</h1>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Usuario</th>
+                <th>Detalles de orden</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in detalles_por_orden %}
+                <tr>
+                    <td>{{ item.orden.id }}</td>
+                    <td>{{ item.orden.fecha }}</td>
+                    <td>{{ item.orden.usuario }}</td>
+                    <td>
+                        <ul class="list-unstyled">
+                            {% for detalle in item.detalles %}
+                                <li>{{ detalle.cantidad_producto }} - {{ detalle.producto }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-danger float-end" href="{% url 'dashboard'  %}" >Volver</a>
+</div>
+{% endblock %}

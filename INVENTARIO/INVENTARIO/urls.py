@@ -44,5 +44,6 @@ urlpatterns = [
     path('eliminar_producto/<int:id>/', eliminar_producto, name='eliminar_producto'),
     path('editar_producto/<int:producto_id>/', editar_producto, name='editar_producto'),
     path('editar_usuario/', login_required(editar_usuario), name='editar_usuario'),
+    path('listar_orden/',listar_orden, name='listar_orden')
 ]
 

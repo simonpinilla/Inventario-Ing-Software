@@ -24,6 +24,31 @@ def inventario(request):
     return render(request, 'index.html')
 
 
+@login_required(login_url='login')
+def listar_orden(request):
+    # Obtener todas las órdenes
+    ordenes = Orden.objects.all()
+
+    # Crear una lista para almacenar detalles asociados a cada orden
+    detalles_por_orden = []
+
+    # Iterar sobre todas las órdenes y obtener los detalles asociados
+    for orden in ordenes:
+        detalles = DetalleOrden.objects.filter(orden=orden)
+        detalles_por_orden.append({
+            'orden': orden,
+            'detalles': detalles
+        })
+
+    # Pasar la información a la plantilla
+    context = {
+        'detalles_por_orden': detalles_por_orden
+    }
+
+    # Renderizar la plantilla y devolver la respuesta
+    return render(request, 'listarOrden.html', context)
+
+
 @login_required
 def cuenta(request):
     usuario = request.user  # Objeto de usuario disponible para usuarios autenticados
@@ -54,25 +79,37 @@ def categorias(request):
     return render(request, 'categoria.html',{"categorias" : categorias})
 
 
+
+@login_required
 def dashboard(request):
     return render(request, 'dashboard.html')
 
+
+@login_required
 def productos(request):
     productos= Producto.objects.all()
     bajo_stock = reduce(lambda x, y: x or y.cantidad < 10, productos, False)
     return render(request, 'productos.html', {"productos": productos, "bajo_stock": bajo_stock})
 
+
+@login_required
 def detalle_orden(request):
     return render(request, 'detalleOrden.html')
 
+
+@login_required
 def agregarCategoria(request):
     return render(request, 'agregarCategoria.html')
 
+
+@login_required
 def agregarProducto(request):
     categorias = Categoria.objects.all()
     proveedores = Proveedor.objects.all()
     return render(request, 'agregarProducto.html', {'categorias': categorias, 'proveedores': proveedores})
 
+
+@login_required
 def buscar_productos(request):
     query = request.GET.get('query', '')
     productos = Producto.objects.filter(nombre__icontains=query)
@@ -83,6 +120,9 @@ def buscar_productos(request):
         return JsonResponse({'productos': serialized_productos}, safe=False)
     else:
         return JsonResponse({'message': 'No se encontraron productos.'})
+    
+    
+@login_required
 def agregar_categoria(request):
     if request.method == 'POST':
         nombre_categoria = request.POST.get('nombre_categoria')
@@ -96,6 +136,8 @@ def agregar_categoria(request):
 
     return render(request, 'agregarCategoria.html')  # Renderiza la plantilla del formulario
 
+
+@login_required
 def procesar_orden(request):
     if request.method == 'POST':
         productos_seleccionados_ids = request.POST.getlist('productos_seleccionados_ids')
@@ -151,6 +193,7 @@ def procesar_orden(request):
 
 
 
+@login_required
 def agregar_proveedor(request):
     if request.method == 'POST':
         nombre_proveedor = request.POST.get('nombre_proveedor')
@@ -164,6 +207,8 @@ def agregar_proveedor(request):
     return render(request, 'agregarProveedor.html')  
 
 
+
+@login_required
 def editar_proveedor(request, proveedor_id):
     proveedor = get_object_or_404(Proveedor, pk=proveedor_id)
     if request.method == 'POST':
@@ -175,6 +220,9 @@ def editar_proveedor(request, proveedor_id):
         return redirect('proveedores')
     return render(request, 'editarProveedor.html', {'proveedor': proveedor})
 
+
+
+@login_required
 def editar_categoria(request, id):
     categoria = get_object_or_404(Categoria, pk=id)
     if request.method == 'POST':
@@ -185,6 +233,8 @@ def editar_categoria(request, id):
     return render(request, 'editarCategoria.html', {'categoria': categoria})
 
 
+
+@login_required
 def agregar_producto(request):
     if request.method == 'POST':
         nombre_producto = request.POST.get('nombre_producto')
@@ -210,6 +260,8 @@ def agregar_producto(request):
         return redirect('productos')
     return render(request, 'agregarProducto')
 
+
+@login_required
 def editar_producto(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
 
@@ -236,22 +288,29 @@ def editar_producto(request, producto_id):
     proveedores = Proveedor.objects.all()
     return render(request, 'editarProducto.html', {'producto': producto, 'categorias': categorias, 'proveedores': proveedores})
 
+
+@login_required
 def eliminar_producto(request, id):
     producto = Producto.objects.get(id = id)
     producto.delete()
     return redirect('productos')
 
 
+@login_required
 def eliminar_proveedor(request, id):
     proveedor = Proveedor.objects.get(id = id)
     proveedor.delete()
     return redirect('proveedores')
 
+
+@login_required
 def eliminar_categoria(request, id):
     categorias = Categoria.objects.get(id = id)
     categorias.delete()
     return redirect('categorias')
 
+
+@login_required
 def registro(request):
     if request.method == 'POST':
         form = MiUsuarioCreationForm(request.POST)
@@ -265,6 +324,7 @@ def registro(request):
     return render(request, 'registro.html', {'form': form})
 
  
+@login_required
 def iniciar_sesion(request):
     if request.method == 'POST':
         usuario = request.POST.get('usuario')

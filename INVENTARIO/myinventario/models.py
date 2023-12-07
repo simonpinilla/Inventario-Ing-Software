@@ -87,7 +87,7 @@ class Producto(models.Model):
     
 
     def __str__(self):
-        return f"Proveedor: {self.nombre}"
+        return f" {self.nombre}"
 
 
 class DetalleOrden(models.Model):
