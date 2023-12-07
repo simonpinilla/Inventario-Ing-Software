@@ -324,7 +324,6 @@ def registro(request):
     return render(request, 'registro.html', {'form': form})
 
  
-@login_required
 def iniciar_sesion(request):
     if request.method == 'POST':
         usuario = request.POST.get('usuario')
