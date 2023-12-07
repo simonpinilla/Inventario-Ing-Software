@@ -153,6 +153,8 @@ $(document).ready(function () {
 
             $(this).siblings('input').attr('data-cantidad-seleccionada', input.val());
         });
+        
 
     
 });
+

@@ -10,7 +10,7 @@
         <div class="input-group">
             <input type="text" class="form-control" id="id_buscar_producto"name="buscar_producto" placeholder="Buscar producto...">
             <div class="input-group-append">
-                <button type="button" id="btn_buscar" data-url="{% url 'buscar_productos' %}">Buscar</button>
+                <button type="button" id="btn_buscar" data-url="{% url 'buscar_productos' %}" class="btn btn-info">Buscar</button>
             </div>
         </div>
     </div>
@@ -63,28 +63,30 @@
     {% endfor %}
 
 
-    <button type="submit" class="btn btn-success" name="realizar_orden">Realizar Orden</button>
+    <button type="submit" class="btn btn-success" name="realizar_orden" id="btn-realizar-orden" disabled>Realizar Orden</button>
 </form>
-{% if orden_procesada_exitosamente %}
-    <div class="modal fade" id="ordenProcesadaModal" tabindex="-1" role="dialog" aria-labelledby="ordenProcesadaModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="ordenProcesadaModalLabel">¡Orden procesada exitosamente!</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+                <h5 class="modal-title" id="exampleModalLongTitle">Detalles de la Orden</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-            Tu contenido aquí...
+                <!-- Itera sobre los detalles de la orden -->
+                {% for detalle in detalles_orden %}
+                    <!-- Muestra los detalles del producto -->
+                    <p>Producto: {{ detalle.producto.nombre }}</p>
+                    <p>Cantidad: {{ detalle.cantidad_producto }}</p>
+                    <!-- Puedes mostrar más detalles del producto si es necesario -->
+                {% endfor %}
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <!-- Otros botones u opciones si es necesario -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
-        </div>
     </div>
-    
-{% endif %}
+</div>
 {% endblock %}

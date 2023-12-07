@@ -7,10 +7,10 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from .forms import *
 from functools import reduce
-from django.shortcuts import render
 from django.utils import timezone
 from django.http import HttpResponseServerError
 from django.http import *
+from django.db import transaction
 
 
 
@@ -98,37 +98,56 @@ def agregar_categoria(request):
 
 def procesar_orden(request):
     if request.method == 'POST':
-        try:
-            productos_seleccionados_ids = request.POST.getlist('productos_seleccionados_ids')
-            productos_seleccionados_ids = [id for id in productos_seleccionados_ids if id != '']
-            print("Productos Seleccionados IDs:", productos_seleccionados_ids)
-            usuario = request.user
-            nueva_orden = Orden.objects.create(fecha=timezone.now(), usuario=usuario)
+        productos_seleccionados_ids = request.POST.getlist('productos_seleccionados_ids')
+        productos_seleccionados_ids = [id for id in productos_seleccionados_ids if id != '']
+        print("Productos Seleccionados IDs:", productos_seleccionados_ids)
+        usuario = request.user
+        nueva_orden = Orden.objects.create(fecha=timezone.now(), usuario=usuario)
+
+        errores = []
+
+        for producto_id in productos_seleccionados_ids:
+            producto = Producto.objects.get(pk=producto_id)
+            cantidad_seleccionada = request.POST.get(f'cantidad_producto_{producto_id}')
+
+            try:
+                cantidad_seleccionada = int(cantidad_seleccionada)
+                if cantidad_seleccionada > 0 and producto.cantidad >= cantidad_seleccionada:
+                    producto.cantidad -= cantidad_seleccionada
+                    producto.save()
+
+                    detalle = DetalleOrden.objects.create(
+                        cantidad_producto=cantidad_seleccionada,
+                        orden=nueva_orden,
+                        producto=producto
+                    )
+                    detalle.save()
+                else:
+                    errores.append(f"No hay suficiente cantidad de {producto.nombre}.")
+            except (ValueError, Producto.DoesNotExist):
+                errores.append("Cantidad seleccionada no válida para el producto.")
+
+        if not errores:
+            detalles_orden = DetalleOrden.objects.filter(orden=nueva_orden).select_related('producto')
             
-            for producto_id in productos_seleccionados_ids:
-                try:
-                    producto = Producto.objects.get(pk=producto_id)
-                    cantidad_seleccionada = request.POST.get(f'cantidad_producto_{producto_id}')
+            # Obtener detalles con nombres de productos
+            detalles_json = []
+            for detalle in detalles_orden:
+                producto = Producto.objects.get(pk=detalle.producto_id)
+                detalle_dict = {
+                    'id': detalle.id,
+                    'cantidad_producto': detalle.cantidad_producto,
+                    'orden_id': detalle.orden_id,
+                    'producto_id': detalle.producto_id,
+                    'nombre_producto': producto.nombre  # Agregar el nombre del producto al diccionario
+                }
+                detalles_json.append(detalle_dict)
 
-                    if producto.cantidad >= int(cantidad_seleccionada) > 0:
-                        producto.cantidad -= int(cantidad_seleccionada)
-                        producto.save()
-
-                        detalle = DetalleOrden.objects.create(
-                            cantidad_producto=cantidad_seleccionada,
-                            orden=nueva_orden,
-                            producto=producto
-                        )
-                        detalle.save()
-                    else:
-                        return HttpResponseServerError("Cantidad seleccionada no válida para el producto.")
-                except Producto.DoesNotExist:
-                    return HttpResponseServerError("Producto no encontrado.")
-            return render(request, 'dashboard.html', {'orden_procesada_exitosamente': True})
-        except Exception as e:
-            print("Error:", e)
-            return HttpResponseServerError("Error al procesar la orden. Contacta al administrador.")
-    return render(request, 'dashboard.html')
+            return JsonResponse({'detalles_orden': detalles_json})
+        else:
+        
+            print(errores)
+    return render(request, 'detalleOrden.html')
 
 
 

@@ -102,6 +102,78 @@
     <script src="../../static/js/main.js"></script>
     <script src="../../static/js/scripts.js"></script>    
     <script src="https://kit.fontawesome.com/fe47ab309f.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const modal = document.getElementById('exampleModalCenter');
+        const formulario = document.getElementById('detalle-orden-form');
+        const btnRealizarOrden = document.getElementById('btn-realizar-orden'); // Agrega esta línea para obtener el botón
+        
+        formulario.addEventListener('submit', function(event) {
+            event.preventDefault(); // Previene el envío normal del formulario
+
+            // Envía el formulario mediante AJAX
+            fetch(formulario.action, {
+                method: 'POST',
+                body: new FormData(formulario),
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}' // Asegúrate de tener el token CSRF disponible aquí
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Intenta parsear la respuesta como JSON
+                } else {
+                    throw new Error('Hubo un problema al procesar la orden.');
+                }
+            })
+            .then(data => {
+                // Procesa los datos recibidos (si es un objeto JSON válido)
+                if (data.detalles_orden) {
+                    const modalBody = document.querySelector('#exampleModalCenter .modal-body');
+                    modalBody.innerHTML = ''; // Limpiar el contenido existente del modal
+
+                    // Iterar sobre los detalles de la orden recibidos del servidor
+                    data.detalles_orden.forEach(detalle => {
+                        const productoNombre = detalle.nombre_producto; // Acceder al nombre del producto
+
+                        const productoElement = document.createElement('p');
+                        productoElement.textContent = 'Producto: ' + productoNombre;
+                        const cantidadElement = document.createElement('p');
+                        cantidadElement.textContent = 'Cantidad: ' + detalle.cantidad_producto;
+
+                        modalBody.appendChild(productoElement);
+                        modalBody.appendChild(cantidadElement);
+                    });
+
+                    $('#exampleModalCenter').modal('show');
+
+                    // Una vez mostrado el modal, agregamos el listener para recargar la página al cerrarse el modal
+                    $('#exampleModalCenter').on('hidden.bs.modal', function () {
+                        location.reload(); // Recargar la página al cerrar el modal
+                    });
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                // Maneja cualquier error que pueda ocurrir durante la solicitud
+            });
+        });
+        formulario.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Previene el envío del formulario al presionar "Enter"
+        }
+    });
+    const detallesOrden = document.querySelector('#tabla_productos_seleccionados');
+    detallesOrden.addEventListener('DOMSubtreeModified', function() {
+        const detalles = detallesOrden.querySelectorAll('tr');
+        if (detalles.length > 0) {
+            btnRealizarOrden.disabled = false; // Habilitar el botón si hay detalles
+        } else {
+            btnRealizarOrden.disabled = true; // Deshabilitar el botón si no hay detalles
+        }
+    });
+    });
+    </script>
 
 
 </body>
