@@ -25,7 +25,7 @@
             <td>{{ proveedor.ciudad }}</td>
             <td>
                 <a href="{% url 'editar_proveedor' proveedor.id %}" class="btn btn-primary">Editar</a>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
                   Eliminar
                 </button>
             </td>
@@ -53,8 +53,8 @@
         {% endfor %}
     </tbody>             
     </table>
-    <a class="btn btn-primary" href="{% url 'agregar_proveedor'  %}" >Agregar</a>
-    <a class="btn btn-danger float-end" href="{% url 'dashboard'  %}" >Volver</a>
+    <a class="btn btn-success" href="{% url 'agregar_proveedor'  %}" >Agregar</a>
+    <a class="btn btn-primary float-end" href="{% url 'dashboard'  %}" >Volver</a>
 </div>
 
 {% endblock %}
