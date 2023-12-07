@@ -310,7 +310,7 @@ def eliminar_categoria(request, id):
     return redirect('categorias')
 
 
-@login_required
+
 def registro(request):
     if request.method == 'POST':
         form = MiUsuarioCreationForm(request.POST)
