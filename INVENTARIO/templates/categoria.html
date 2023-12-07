@@ -21,7 +21,7 @@
             <td>{{ categoria.descripcion }}</td>
             <td>
                 <a href="{% url 'editar_categoria' categoria.id %}" class="btn btn-primary">Editar</a>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
                   Eliminar
                 </button>
             </td>
@@ -40,7 +40,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a type="submit" href="{% url 'eliminar_categoria' categoria.id  %}" class="btn btn-primary">Eliminar</a>
+                    <a type="submit" href="{% url 'eliminar_categoria' categoria.id  %}" class="btn btn-danger">Eliminar</a>
                   </div>
                 </div>
               </div>
